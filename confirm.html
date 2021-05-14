@@ -21,12 +21,11 @@
             <img class="logo-white lazyloaded" src="https://3uwyyb2sbpzrr28a1295eii9-wpengine.netdna-ssl.com/wp-content/themes/globaledit/img/ge-logo-light.svg" data-src="https://3uwyyb2sbpzrr28a1295eii9-wpengine.netdna-ssl.com/wp-content/themes/globaledit/img/ge-logo-light.svg">
          </div>
          <div class="w3-display-middle">
-            <h1 id="result" class="w3-jumbo w3-animate-top">Linking...</h1>
+            <h1 id="bigText" class="w3-jumbo w3-animate-top">Linking...</h1>
             <hr class="w3-border-grey" style="margin:auto;width:100%">
-            <p class="w3-large w3-center">Hold on, we're getting things done...</p>
+            <p id="smallText" class="w3-large w3-center">Hold on, we're getting things done...</p>
          </div>
       </div>
-
       <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
       <script>
          function getUrlVars()
@@ -41,26 +40,35 @@
          }
          return vars;
          }
-
+         
          //When the page has loaded.
          $( document ).ready(function()
          {
-             var collectionId = getUrlVars()["collectionId"];
-         //Perform Ajax request.
-         $.ajax({
+         var collectionId = getUrlVars()["collectionId"];
 
-             url: 'https://www.workato.com/webhooks/rest/e3f411b7-95e6-4ad1-a610-76dae40553d1/typeformthing?me='+ collectionId,
+         $.ajax({
+         
+             url: 'https://apim.workato.com/vsevolodi/confirmation/confirm?collectionId=1',
              type: 'get',
+             headers: {
+               "API-TOKEN":"aef9bd636b820de1d55918efaa9d594cc13d28098afeeca9936aa98f270df0d8",
+             },
              success: function(data){
                  //If the success function is executed,
                  //then the Ajax request was successful.
                  //Add the data we received in our Ajax
                  //request to the "content" div.
-                 $('#result').html("Successfully linked");
+                 var collectionName = data["collectionName"]
+                 var folderName = data["folderName"]
+                 $('#bigText').html('Linked!');
+                 $('#smallText').html(''+
+                 '<div style="font-weight: bold">"'+collectionName+'"</div> '+
+                 '<div>now linked to</div>'+
+                 '<div style="font-weight: bold">"'+folderName+'"</div>');
              },
              error: function (xhr, ajaxOptions, thrownError) {
-                 var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-                 $('#content').html(errorMsg);
+                 $('#bigText').html('Oops..');
+                 $('#smallText').html('Something went terribly wrong..');
                }
          });
          });
