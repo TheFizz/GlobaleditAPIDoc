@@ -68,7 +68,7 @@
              },
              error: function (xhr, ajaxOptions, thrownError) {
                  $('#bigText').html('Oops..');
-                 $('#smallText').html('Something went terribly wrong..');
+                 $('#smallText').html(JSON.parse( xhr.responseText)["message"]);
                }
          });
          });
