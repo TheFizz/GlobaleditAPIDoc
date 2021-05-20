@@ -47,7 +47,9 @@
 			var collectionId = getUrlVars()["collectionId"];
 			var collectionName = getUrlVars()["collectionName"];
 			var folderPath = getUrlVars()["folderPath"];
-			
+			console.log(collectionId);
+         console.log(collectionName);
+         console.log(folderPath);
 			if(collectionName===undefined||collectionId===undefined||folderPath===undefined)
 			{
 			   $('#bigText').html('Oops..');
@@ -62,13 +64,12 @@
 			    type: 'get',
 			    success: function(data){
 			       console.log(data);
-			        var collectionName = data["collectionName"]
-			        var folderName = data["folderName"]
+                
 			        $('#bigText').html('Linked!');
 			        $('#smallText').html(''+
-			        '<div style="font-weight: bold">"'+collectionName+'"</div> '+
+			        '<div style="font-weight: bold">"'+unescape(collectionName)+'"</div> '+
 			        '<div>now linked to</div>'+
-			        '<div style="font-weight: bold">"'+folderName+'"</div>');
+			        '<div style="font-weight: bold">"'+unescape(folderPath)+'"</div>');
 			    },
 			    error: function (xhr, ajaxOptions, thrownError) {
 			        $('#bigText').html('Oops..');
