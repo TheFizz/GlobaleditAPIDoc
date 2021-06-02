@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<title>Confirmation</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+	<style>
+		body,h1 {font-family: "Raleway", sans-serif}
+		body, html {height: 100%}
+		.bgimg {
+		background-image: url(https://3uwyyb2sbpzrr28a1295eii9-wpengine.netdna-ssl.com/wp-content/uploads/2019/10/heroBG.png);
+		min-height: 100%;
+		background-position: center;
+		background-size: cover;
+		}
+	</style>
+	<body>
+		<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+			<div class="w3-display-topleft w3-padding-large w3-xlarge">
+				<img class="logo-white lazyloaded" src="https://3uwyyb2sbpzrr28a1295eii9-wpengine.netdna-ssl.com/wp-content/themes/globaledit/img/ge-logo-light.svg" data-src="https://3uwyyb2sbpzrr28a1295eii9-wpengine.netdna-ssl.com/wp-content/themes/globaledit/img/ge-logo-light.svg">
+			</div>
+			<div class="w3-display-middle">
+				<h1 id="bigText" class="w3-jumbo w3-center w3-animate-top">Linking...</h1>
+				<hr class="w3-border-grey" style="margin:auto;width:100%">
+				<p id="smallText" class="w3-large w3-center">Hold on, we're getting things done...</p>
+			</div>
+		</div>
+		<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+		<script>
+			function getUrlVars() 
+			{
+				var vars = [],
+					hash;
+				var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+				for (var i = 0; i < hashes.length; i++) {
+					hash = hashes[i].split('=');
+					vars.push(hash[0]);
+					vars[hash[0]] = hash[1];
+				}
+				return vars;
+			}
+			
+			//When the page has loaded.
+			$(document).ready(function() {
+				var collectionId = getUrlVars()["collectionId"];
+				var collectionName = getUrlVars()["collectionName"];
+				var folderPath = getUrlVars()["folderPath"];
+				console.log(collectionId);
+				console.log(collectionName);
+				console.log(folderPath);
+				if (collectionName === undefined || collectionId === undefined || folderPath === undefined) {
+					$('#bigText').html('Oops..');
+					$('#smallText').html('One or many parameters incorrect');
+				} else
+
+					$.ajax({
+
+						// url: 'https://apim.workato.com/vsevolodi/confirmation/confirm?collectionId='+collectionId,
+						url: 'https://www.workato.com/webhooks/rest/e3f411b7-95e6-4ad1-a610-76dae40553d1/disoveryhook?collectionId=' + collectionId + '&collectionName=' + collectionName + '&folderPath=' + folderPath,
+						type: 'get',
+						success: function(data) {
+							console.log(data);
+
+							$('#bigText').html('Linked!');
+							$('#smallText').html('' +
+								'<div style="font-weight: bold">"' + unescape(collectionName) + '"</div> ' +
+								'<div>now linked to</div>' +
+								'<div style="font-weight: bold">"' + unescape(folderPath) + '"</div>');
+						},
+						error: function(xhr, ajaxOptions, thrownError) {
+							$('#bigText').html('Oops..');
+							$('#smallText').html(JSON.parse(xhr.responseText)["message"]);
+						}
+					});
+			});
+			
+		</script>
+	</body>
+</html>
