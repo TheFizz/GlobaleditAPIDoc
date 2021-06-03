@@ -16,9 +16,14 @@
   <div class="page-content">
     <img src="images/logos.png" class="logos">
     <p class="connection-successful" id="bigText">Connecting...</p>
-    <p id="smallText" class="cs-content">Your Discover Images folder <span id="folderPath"></span> <a  id=status></a> <span id="collectionName"></span></p>
-    <p><a href="https://app2.globaledit.com/" class="btn-signin">Sign In to globaledit</a> </p>
+      <div class="cs-content" id="folderPath"></div>
+       <div class="cs-medline" id="smallText"></div> 
+       <div class="cs-content" id="collectionName"></div>
+    <p class="btn-para">
+      <a href="https://app2.globaledit.com/" class="btn-signin">Go to globaledit</a>
+    </p>
   </div>
+  
   <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
   <script>
     function getUrlVars() 
@@ -56,7 +61,7 @@
             console.log(data);
 
             $('#bigText').html('Connected!');
-            $('#status').html(' has been sucessfully connected to globaledit Collection');
+            $('#smallText').html('connected to globaledit Collection');
             $('#folderPath').html(unescape(folderPath));
             $('#collectionName').html(unescape(collectionName));
             /*

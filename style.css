@@ -33,14 +33,19 @@ body{
 	margin-top: 40px;
 }
 .cs-content{
+	font-weight: bold;
+	font-size: 20px;
+	line-height: 1.5;
+	color: #ffffff;
+}
+.cs-medline{
 	font-size: 18px;
 	line-height: 1.5;
 	color: #ffffff;
-	margin-bottom: 40px;
 }
-.cs-content span{
-	font-weight: bold;
-	letter-spacing: 1px;
+.btn-para
+{
+	margin-top: 40px;
 }
 .btn-signin {
 	-webkit-border-radius: 3;
