@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Integration Confirm - globaledit</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="main-container">
+  <div class="top-nav">
+    <img src="images/ge-logo-light.webp" class="logoge-logo-light">
+  </div>
+  <div class="page-content">
+    <img src="images/logos2.png" class="logos">
+    <p class="connection-successful" id="bigText">Connecting...</p>
+      <div class="cs-content" id="lightboxName"></div>
+       <div class="cs-medline" id="smallText"></div> 
+       <div class="cs-content" id="workspaceName"></div>
+    <p class="btn-para">
+      <a href="https://app2.globaledit.com/" class="btn-signin">Go to globaledit</a>
+    </p>
+  </div>
+  
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script>
+    function getUrlVars() 
+    {
+      var vars = [],
+        hash;
+      var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+      for (var i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+      }
+      return vars;
+    }
+    
+    //When the page has loaded.
+    $(document).ready(function() {
+      var workspaceId = getUrlVars()["workspaceId"];
+      var lightboxName = getUrlVars()["lightboxName"];
+      var workspaceName = getUrlVars()["workspaceName"];
+      console.log(workspaceId);
+      console.log(lightboxName);
+      console.log(workspaceName);
+      if (workspaceId === undefined || lightboxName === undefined || workspaceName === undefined) {
+        $('#bigText').html('Oops..');
+        $('#smallText').html('One or many parameters incorrect');
+      } else
+
+        $.ajax({
+
+          url: 'https://www.workato.com/webhooks/rest/e3f411b7-95e6-4ad1-a610-76dae40553d1/disoveryhook?workspaceId=' + workspaceId + '&lightboxName=' + lightboxName + '&workspaceName=' + workspaceName,
+          type: 'get',
+          success: function(data) {
+            console.log(data);
+
+            $('#bigText').html('Connected!');
+            $('#smallText').html('connected to globaledit Collection');
+            $('#lightboxName').html(unescape(lightboxName));
+            $('#workspaceName').html(unescape(workspaceName));
+          },
+          error: function(xhr, ajaxOptions, thrownError) {
+            $('#bigText').html('Oops..');
+            $('#smallText').html(JSON.parse(xhr.responseText)["message"]);
+          }
+        });
+    });
+    
+  </script>
+</div>
+</body>
+</html>
