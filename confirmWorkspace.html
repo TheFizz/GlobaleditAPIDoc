@@ -41,20 +41,20 @@
     
     //When the page has loaded.
     $(document).ready(function() {
-      var workspaceId = getUrlVars()["workspaceId"];
+      var lightboxId = getUrlVars()["lightboxId"];
       var lightboxName = getUrlVars()["lightboxName"];
       var workspaceName = getUrlVars()["workspaceName"];
-      console.log(workspaceId);
+      console.log(lightboxId);
       console.log(lightboxName);
       console.log(workspaceName);
-      if (workspaceId === undefined || lightboxName === undefined || workspaceName === undefined) {
+      if (lightboxId === undefined || lightboxName === undefined || workspaceName === undefined) {
         $('#bigText').html('Oops..');
         $('#smallText').html('One or many parameters incorrect');
       } else
 
         $.ajax({
 
-          url: 'https://www.workato.com/webhooks/rest/e3f411b7-95e6-4ad1-a610-76dae40553d1/disoveryhook?workspaceId=' + workspaceId + '&lightboxName=' + lightboxName + '&workspaceName=' + workspaceName,
+          url: 'https://www.workato.com/webhooks/rest/e3f411b7-95e6-4ad1-a610-76dae40553d1/confirmlightbox?lightboxId=' + lightboxId + '&lightboxName=' + lightboxName + '&workspaceName=' + workspaceName,
           type: 'get',
           success: function(data) {
             console.log(data);
